@@ -165,7 +165,7 @@ function z.onKeydown(keyCode: Enum.KeyCode): signals.Signal
     if not keydownSignals[keyCode.Value] then
         keydownSignals[keyCode.Value] = z.Signal.new()
     end
-    
+
     return keydownSignals[keyCode.Value]
 end
 
@@ -179,11 +179,11 @@ if z.isLocal() then
         end)
 
     end)
-    
+
     game:GetService("UserInputService").InputBegan:Connect(function(input: InputObject, gameProcessed: boolean)
         z.sendToServer("_zInputBegan", gameProcessed, input.UserInputType, input.KeyCode)
     end)
-    
+
     game:GetService("UserInputService").InputEnded:Connect(function(input: InputObject, gameProcessed: boolean)
         z.sendToServer("_zInputEnded", gameProcessed, input.UserInputType, input.KeyCode)
     end)
@@ -269,8 +269,8 @@ function z._loadAnimationTrack(humanoid: Humanoid, id: number): AnimationTrack
             print('Speed is', track.Speed)
             print('TimePosition is', track.TimePosition)
             print('WeightCurrent is', track.WeightCurrent)
-            
-            
+
+
             --07:42:37.620  track.Length is zero  -  Client - zLibrary:222
             --07:42:37.621  Animation is Animation_8177212811  -  Client - zLibrary:223
             --07:42:37.621  IsPlaying is true  -  Client - zLibrary:224
@@ -279,8 +279,8 @@ function z._loadAnimationTrack(humanoid: Humanoid, id: number): AnimationTrack
             --07:42:37.621  Speed is 1  -  Client - zLibrary:227
             --07:42:37.622  TimePosition is 0.95833307504654  -  Client - zLibrary:228
             --07:42:37.622  WeightCurrent is 1  -  Client - zLibrary:229
-            
-            
+
+
             error("Animation " .. tostring(id) .. " did not load, or has zero length.  Check permissions at https://www.roblox.com/library/" .. tostring(id))
         end
     end)
@@ -382,12 +382,12 @@ function z.setCharacter(player: Player, character: Model)
     newCharacter:SetPrimaryPartCFrame((oldCharacter.PrimaryPart or oldCharacter.HumanoidRootPart).CFrame)
     print('newCharacter', newCharacter)
     print('humanoid', newCharacter.Humanoid, 'health', newCharacter.Humanoid.Health)
-    
+
     local oldHumanoid = oldCharacter.Humanoid
     local newHumanoid = newCharacter.Humanoid
-    
+
     disablePlayerRespawn[player.UserId] = true
-    
+
     oldHumanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
     oldHumanoid.BreakJointsOnDeath = false
     newHumanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
@@ -395,7 +395,7 @@ function z.setCharacter(player: Player, character: Model)
 
     oldHumanoid.Parent = nil
     newHumanoid.Parent = nil
-    
+
     player.Character = newCharacter
     newHumanoid.Parent = newCharacter
 
@@ -426,23 +426,23 @@ end
 --    end
 --    local playerCharacter = player.Character :: Character
 --    local playerHumanoid = playerCharacter.Humanoid
-    
+
 --    playerHumanoid.HipHeight = newHumanoid.HipHeight
-    
+
 --    local newCharacter = character:Clone() :: Character
 --    local newRootPart = newCharacter.PrimaryPart
 --    newRootPart.CFrame = playerCharacter.HumanoidRootPart.CFrame
-    
+
 --    local oldChildren = playerCharacter:GetChildren()
-    
+
 --    --playerHumanoid:ReplaceBodyPartR15(Enum.BodyPartR15.LeftHand, newCharacter.LeftHand)
-    
+
 --    for i, partEnum in ipairs({Enum.BodyPartR15.Head}) do
 --        playerHumanoid:ReplaceBodyPartR15(partEnum, newHumanoid:GetBodyPartR15(partEnum))
 --        print("***", newChild.Name, "class", newChild.ClassName, "is limb", newHumanoid:GetBodyPartR15(newChild))
 --    end
 
-    
+
 --    -- Move new character parts to 
 --    --for i, newChild in ipairs(newCharacter:GetChildren()) do
 --    --    if newChild:IsA("Humanoid") or not newChild:IsA("BasePart")  then
@@ -458,7 +458,7 @@ end
 --    --        end
 --    --    end
 --    --end
-    
+
 --    --for i, oldChild in ipairs(oldChildren) do
 --    --    if oldChild:IsA("Humanoid") or not oldChild:IsA("BasePart") then
 --    --        print("*** Not removing", oldChild.Name, "class", oldChild.ClassName)
@@ -467,9 +467,9 @@ end
 --    --        oldChild.Parent = newCharacter
 --    --    end
 --    --end
-    
+
 --    newCharacter:Destroy()
-    
+
 --    --print('newCharacter', newCharacter)
 --    --print('humanoid', newCharacter.Humanoid, 'health', newCharacter.Humanoid.Health)
 
@@ -605,7 +605,7 @@ if z.isServer() then
         --local animation = script.IronManFlyAnimation
         --local track = player.Character.Humanoid:LoadAnimation(animation)
         --track:Play()
-        
+
         z.sendToClient('zStartFlying', player)
     end
 
@@ -624,14 +624,14 @@ if z.isLocal() then
     z.receiveFromServer("zStartFlying", function()
         flying = true
         local myPlayer = z.localPlayer()
-        
+
         local myChar = myPlayer.Character
         local myHRP = myChar:WaitForChild("HumanoidRootPart")
         local camera = game.Workspace.CurrentCamera
 
 
         local myHum = myChar.Humanoid
-        
+
         local track = z.getAnimationTrack(myHum, 8240410453) -- Flight_8240410453
         --track.Looped = true
         track:Play()
@@ -654,7 +654,7 @@ if z.isLocal() then
             bg.Name ="zFlyingBodyGyro"
             bg.Parent = myHRP   
         end
-        
+
         bg.MaxTorque = Vector3.new(400000,400000,400000)
         bg.D = 10
 
