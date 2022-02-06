@@ -1,6 +1,6 @@
--- Place me in ReplicatedStorage
+-- ModuleScript ReplicatedStorage.zLibrary
 --!strict
-print('zLibrary v0.5 2022 Jan 18')
+print('zLibrary v0.5.3 2022 Feb 6')
 
 local z = {}
 

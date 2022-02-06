@@ -1,3 +1,3 @@
--- Place me in StarterPlayerScripts
+-- Script ServerScriptService.zLibraryServerScript
 --!strict
 require(game.ReplicatedStorage.zLibrary)
