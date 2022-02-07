@@ -12,6 +12,7 @@
     },
     "ReplicatedStorage": {
       "$path": "ReplicatedStorage",
+      
       "$ignoreUnknownInstances": true
     },
     "ServerScriptService": {

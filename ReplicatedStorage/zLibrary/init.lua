@@ -1,11 +1,11 @@
 -- ModuleScript ReplicatedStorage.zLibrary
 --!strict
-print('zLibrary v0.5.3 2022 Feb 6')
+print('zLibrary v0.5.8 2022 Feb 7')
 
 local z = {}
-
 local signals = require(script.zLibrarySignal)
 z.Signal = signals.Signal
+local Players = game:GetService("Players")
 
 local collectionService = game:GetService("CollectionService") :: CollectionService
 
@@ -360,6 +360,38 @@ function z.playerFromGui(guiElement: GuiBase2d): Player
     local player: Player = guiElement:FindFirstAncestorOfClass("Player") :: Player
     assert(player)
     return player
+end
+
+function z.playerFromPossession(possession: Instance): Player?
+    -- If possession is in the backpack, find containing Player
+    local playerCandidate = possession:FindFirstAncestorOfClass("Player")
+    if playerCandidate then
+        return playerCandidate
+    end
+    -- If possession is in the character, find containing character to get player
+    while true do
+        local characterCandidate: Model? = possession:FindFirstAncestorOfClass("Model")
+        if not characterCandidate then
+            return nil
+        else
+            if characterCandidate.Parent == game.Workspace then
+                return Players:GetPlayerFromCharacter(characterCandidate)
+            end
+            possession = characterCandidate
+        end
+    end
+end
+
+function z.playerFromTool(tool: Tool): Player?
+    return z.playerFromPossession(tool)
+end
+
+function z.playerGetEquippedTool(player: Player): Tool?
+    if player.Character then
+        return player.Character:FindFirstChildOfClass("Tool")
+    else
+        return nil
+    end
 end
 
 -- More info on morphing characters from GnomeCode
